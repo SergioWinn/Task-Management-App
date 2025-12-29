@@ -1,0 +1,13 @@
+# Python / Flask
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Node / Vue
+node_modules/
+dist/
+.DS_Store
+.idea/
+.vscode/
+*.log
