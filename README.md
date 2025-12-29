@@ -1,6 +1,6 @@
 # Task Management App
 
-Aplikasi Task Management berbasis web yang dikembangkan untuk memenuhi **Take Home Test AI Engineer**. Aplikasi ini dibangun menggunakan arsitektur Clean Code sederhana dengan fitur autentikasi JWT dan manajemen tugas (CRUD).
+Aplikasi Task Management berbasis web yang dibangun menggunakan arsitektur Clean Code sederhana dengan fitur autentikasi JWT dan manajemen tugas (CRUD).
 
 ## 🛠 Tech Stack
 
