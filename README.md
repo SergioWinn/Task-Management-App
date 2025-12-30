@@ -1,12 +1,12 @@
 # Task Management App
 
-Aplikasi Task Management berbasis web yang dibangun menggunakan arsitektur Clean Code sederhana dengan fitur autentikasi JWT dan manajemen tugas (CRUD).
+Aplikasi Task Management berbasis web yang dibangun menggunakan arsitektur Clean Code. Aplikasi ini memiliki fitur autentikasi JWT, manajemen tugas (CRUD) lengkap dengan tanggal, serta antarmuka modern yang responsif dan mendukung Dark Mode.
 
 ## 🛠 Tech Stack
 
 **Frontend:**
 * Vue.js 3 (Composition API)
-* Tailwind CSS (Modern styling)
+* Tailwind CSS (Modern styling & Dark Mode)
 * Axios (HTTP Client)
 * Vite (Build tool)
 
@@ -94,23 +94,44 @@ npm run dev
 
 ## 🔐 Akun Login (Testing)
 
-Sesuai spesifikasi tugas, sistem login menggunakan kredensial statis (hardcoded dummy login):
+Sistem login menggunakan kredensial statis (dummy login) untuk keperluan demonstrasi:
 
 * **Username:** `admin`
 * **Password:** `admin123`
 
 ---
 
-## 📂 Struktur Folder Project
+## 📝 Fitur Utama
 
-Berikut adalah gambaran struktur folder utama aplikasi ini:
+Aplikasi ini memiliki fitur lengkap sebagai berikut:
+
+### 1. Advanced Task Management
+* **CRUD Lengkap:** Create, Read, Update, dan Delete tugas.
+* **Manajemen Waktu:** Mendukung input **Start Date** dan **Due Date** (Deadline) untuk setiap tugas.
+* **Status Tracking:** Mengubah status tugas (To Do, In Progress, Done) dengan indikator visual.
+
+### 2. Search & Filtering (Real-time)
+* **Pencarian Instan:** Mencari tugas berdasarkan judul tanpa reload halaman (Computed Properties).
+* **Filter Status:** Menyaring tugas berdasarkan status pekerjaan.
+
+### 3. Modern UI/UX (Tailwind CSS)
+* **Dark Mode Support:** Mendukung tema gelap dan terang (Sun/Moon toggle) yang tersimpan di LocalStorage.
+* **Responsive Design:** Tampilan grid yang rapi di desktop maupun mobile.
+* **Interactive Login:** Fitur Show/Hide password pada form login.
+
+### 4. Security
+* **JWT Authentication:** Mengamankan endpoint API menggunakan Token Bearer.
+
+---
+
+## 📂 Struktur Folder Project
 
 ```
 task-management-app/
 ├── backend/                  # Server-side Logic
 │   ├── app.py                # Entry point & App Initialization
 │   ├── config.py             # Database & JWT Config
-│   ├── models.py             # Database Models (SQLAlchemy)
+│   ├── models.py             # Database Models (Task with Dates)
 │   ├── routes.py             # API Routes / Endpoints
 │   └── requirements.txt      # Python dependencies list
 │
@@ -118,30 +139,17 @@ task-management-app/
 │   ├── src/
 │   │   ├── assets/           # CSS & Static files
 │   │   ├── components/       # Vue Components
-│   │   │   ├── Login.vue     # Halaman Login
-│   │   │   └── TaskManager.vue # Dashboard CRUD Task
-│   │   ├── App.vue           # Root Component
+│   │   │   ├── Login.vue     # Halaman Login (Show/Hide Pass)
+│   │   │   └── TaskManager.vue # Dashboard (Search, Filter, Date)
+│   │   ├── App.vue           # Root Component (Dark Mode Logic)
 │   │   └── main.js           # Vue Entry point
 │   ├── index.html
-│   ├── tailwind.config.js    # Konfigurasi Tailwind CSS
+│   ├── tailwind.config.js    # Konfigurasi Tailwind & Dark Mode
 │   └── package.json
 │
 └── README.md                 # Dokumentasi Project
 ```
 
-## 📝 Fitur Utama
-
-1.  **JWT Authentication:** Login aman menggunakan Token Bearer.
-2.  **Task CRUD:**
-    * **Create:** Menambah tugas baru dengan judul, deskripsi, dan status.
-    * **Read:** Menampilkan daftar tugas dalam layout Grid yang responsif.
-    * **Update:** Mengedit detail tugas dan mengubah status (To Do -> In Progress -> Done).
-    * **Delete:** Menghapus tugas dengan konfirmasi.
-3.  **Modern UI/UX:**
-    * Desain responsif menggunakan **Tailwind CSS**.
-    * Indikator warna status visual (Badges).
-    * Interaksi halus (Hover effects, Transitions).
-
 ---
 
-**Dibuat oleh:** [Nama Anda]
+**Dibuat oleh:** Sergio Winnero
