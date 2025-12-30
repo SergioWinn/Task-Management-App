@@ -14,18 +14,62 @@
       </button>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-1 shadow-sm border border-gray-200 dark:border-gray-700 mb-8 transition-colors hover:shadow-md">
-      <form @submit.prevent="addTask" class="flex flex-col md:flex-row gap-0 md:gap-2">
-        <input v-model="newTask.title" placeholder="What needs to be done?" required class="flex-1 px-6 py-4 bg-transparent outline-none text-gray-700 dark:text-gray-200 placeholder-gray-400 font-medium" />
-        <div class="w-px bg-gray-200 dark:bg-gray-700 my-2 hidden md:block"></div>
-        <input v-model="newTask.description" placeholder="Add details..." class="flex-1 px-6 py-4 bg-transparent outline-none text-gray-600 dark:text-gray-300 placeholder-gray-400" />
-        <div class="w-px bg-gray-200 dark:bg-gray-700 my-2 hidden md:block"></div>
-        <select v-model="newTask.status" class="px-6 py-4 bg-transparent outline-none text-gray-600 dark:text-gray-300 cursor-pointer md:w-40 bg-none">
-          <option class="dark:bg-gray-800">To Do</option>
-          <option class="dark:bg-gray-800">In Progress</option>
-          <option class="dark:bg-gray-800">Done</option>
-        </select>
-        <button type="submit" class="m-2 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform active:scale-95">Add</button>
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-8 transition-colors hover:shadow-md">
+      <form @submit.prevent="addTask" class="flex flex-col gap-4">
+        
+        <div class="flex flex-col md:flex-row gap-4">
+          <input 
+            v-model="newTask.title" 
+            placeholder="Task Title (Required)" 
+            required 
+            class="flex-1 px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl outline-none text-gray-900 dark:text-white placeholder-gray-400 font-medium focus:ring-2 focus:ring-indigo-500 transition-all" 
+          />
+          <input 
+            v-model="newTask.description" 
+            placeholder="Description (Optional)" 
+            class="flex-1 px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl outline-none text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 transition-all" 
+          />
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4 items-end md:items-center">
+          
+          <div class="w-full md:w-auto flex-1">
+            <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1 ml-1">Start Date</label>
+            <input 
+              type="date" 
+              v-model="newTask.start_date" 
+              class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl outline-none text-gray-700 dark:text-gray-200 text-sm focus:ring-2 focus:ring-indigo-500" 
+            />
+          </div>
+
+          <div class="w-full md:w-auto flex-1">
+            <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1 ml-1">Due Date</label>
+            <input 
+              type="date" 
+              v-model="newTask.end_date" 
+              class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl outline-none text-gray-700 dark:text-gray-200 text-sm focus:ring-2 focus:ring-indigo-500" 
+            />
+          </div>
+
+          <div class="w-full md:w-auto flex-1">
+            <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1 ml-1">Status</label>
+            <select 
+              v-model="newTask.status" 
+              class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl outline-none text-gray-700 dark:text-gray-200 text-sm cursor-pointer focus:ring-2 focus:ring-indigo-500"
+            >
+              <option class="dark:bg-gray-800">To Do</option>
+              <option class="dark:bg-gray-800">In Progress</option>
+              <option class="dark:bg-gray-800">Done</option>
+            </select>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full md:w-auto px-8 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform active:scale-95 h-[42px] mt-auto"
+          >
+            Add Task
+          </button>
+        </div>
       </form>
     </div>
 
@@ -77,13 +121,27 @@
         class="group bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full"
       >
         <div v-if="editingId === task.id" class="space-y-3 animate-fade-in">
-          <input v-model="editForm.title" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-bold" />
-          <textarea v-model="editForm.description" rows="3" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm"></textarea>
-          <select v-model="editForm.status" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm">
+          <input v-model="editForm.title" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-bold" placeholder="Title" />
+          
+          <textarea v-model="editForm.description" rows="2" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm" placeholder="Description"></textarea>
+          
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase font-bold">Start</label>
+                <input type="date" v-model="editForm.start_date" class="w-full px-2 py-1.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded text-gray-900 dark:text-white text-xs outline-none focus:ring-1 focus:ring-indigo-500" />
+            </div>
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase font-bold">Due</label>
+                <input type="date" v-model="editForm.end_date" class="w-full px-2 py-1.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded text-gray-900 dark:text-white text-xs outline-none focus:ring-1 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <select v-model="editForm.status" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
              <option class="dark:bg-gray-800">To Do</option>
              <option class="dark:bg-gray-800">In Progress</option>
              <option class="dark:bg-gray-800">Done</option>
           </select>
+          
           <div class="flex gap-2 pt-2">
             <button @click="updateTask(task.id)" class="flex-1 bg-emerald-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-emerald-600 transition">Save</button>
             <button @click="editingId = null" class="flex-1 bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-200 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-500 transition">Cancel</button>
@@ -99,35 +157,46 @@
               {{ task.status }}
             </span>
           </div>
-          <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-4 flex-grow">
+          
+          <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
             {{ task.description || 'No description provided.' }}
           </p>
+          
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div v-if="task.start_date" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 font-medium">
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>{{ task.start_date }}</span>
+            </div>
+            
+            <div v-if="task.end_date" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 text-xs text-red-600 dark:text-red-400 font-medium">
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Due: {{ task.end_date }}</span>
+            </div>
+          </div>
+
           <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-50 dark:border-gray-700 mt-auto opacity-80 group-hover:opacity-100 transition-opacity">
             <button @click="startEdit(task)" class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Edit</button>
             <button @click="deleteTask(task.id)" class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors">Delete</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'; // Import computed
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 // --- SEARCH & FILTER LOGIC ---
 const searchQuery = ref('');
-const filterStatus = ref(''); // Default kosong (All)
+const filterStatus = ref('');
 
-// Computed Property: Memfilter tasks secara real-time
 const filteredTasks = computed(() => {
   return tasks.value.filter(task => {
-    // 1. Cek kecocokan Title (Case Insensitive)
     const matchesSearch = task.title.toLowerCase().includes(searchQuery.value.toLowerCase());
-    // 2. Cek kecocokan Status
     const matchesFilter = filterStatus.value === '' || task.status === filterStatus.value;
-    
     return matchesSearch && matchesFilter;
   });
 });
@@ -137,7 +206,7 @@ const clearFilters = () => {
   filterStatus.value = '';
 };
 
-// --- LOGIC LAINNYA (SAMA SEPERTI SEBELUMNYA) ---
+// --- STYLE HELPERS ---
 const getStatusColor = (status) => {
   switch (status) {
     case 'Done': return 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800'; 
@@ -146,8 +215,10 @@ const getStatusColor = (status) => {
   }
 };
 
+// --- CORE DATA & API ---
 const tasks = ref([]);
-const newTask = ref({ title: '', description: '', status: 'To Do' });
+// Updated: Default form value includes start_date and end_date
+const newTask = ref({ title: '', description: '', status: 'To Do', start_date: '', end_date: '' });
 const editingId = ref(null);
 const editForm = ref({});
 
@@ -165,12 +236,14 @@ const fetchTasks = async () => {
 const addTask = async () => {
   if (!newTask.value.title) return;
   await axios.post('http://127.0.0.1:5000/api/tasks', newTask.value, getAuthHeader());
-  newTask.value = { title: '', description: '', status: 'To Do' };
+  // Reset form
+  newTask.value = { title: '', description: '', status: 'To Do', start_date: '', end_date: '' };
   fetchTasks();
 };
 
 const startEdit = (task) => {
   editingId.value = task.id;
+  // Copy task data to edit form
   editForm.value = { ...task };
 };
 

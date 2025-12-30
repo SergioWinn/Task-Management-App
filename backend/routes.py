@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models import db, Task
 from flask_jwt_extended import create_access_token, jwt_required
+from datetime import datetime
 
 api_bp = Blueprint('api', __name__)
 
@@ -20,13 +21,19 @@ def login():
 
 # Create task
 @api_bp.route('/tasks', methods=['POST'])
-@jwt_required() # Butuh login
+@jwt_required()
 def create_task():
     data = request.json
+    
+    start_date = datetime.strptime(data['start_date'], '%Y-%m-%d').date() if data.get('start_date') else None
+    end_date = datetime.strptime(data['end_date'], '%Y-%m-%d').date() if data.get('end_date') else None
+
     new_task = Task(
         title=data['title'],
         description=data.get('description', ''),
-        status=data.get('status', 'To Do')
+        status=data.get('status', 'To Do'),
+        start_date=start_date,
+        end_date=end_date
     )
     db.session.add(new_task)
     db.session.commit()
@@ -49,6 +56,12 @@ def update_task(id):
     task.title = data.get('title', task.title)
     task.description = data.get('description', task.description)
     task.status = data.get('status', task.status)
+
+    if 'start_date' in data:
+        task.start_date = datetime.strptime(data['start_date'], '%Y-%m-%d').date() if data['start_date'] else None
+    
+    if 'end_date' in data:
+        task.end_date = datetime.strptime(data['end_date'], '%Y-%m-%d').date() if data['end_date'] else None
     
     db.session.commit()
     return jsonify(task.to_dict()), 200

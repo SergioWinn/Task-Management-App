@@ -20,20 +20,36 @@
               v-model="username" 
               type="text" 
               required 
-              placeholder="admin"
+              placeholder="Enter your username"
               class="w-full px-5 py-3 bg-gray-50 dark:bg-gray-700 border border-transparent dark:border-gray-600 rounded-xl focus:bg-white dark:focus:bg-gray-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400"
             >
           </div>
 
           <div>
             <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1.5 ml-1">Password</label>
-            <input 
-              v-model="password" 
-              type="password" 
-              required 
-              placeholder="admin123"
-              class="w-full px-5 py-3 bg-gray-50 dark:bg-gray-700 border border-transparent dark:border-gray-600 rounded-xl focus:bg-white dark:focus:bg-gray-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400"
-            >
+            <div class="relative">
+              <input 
+                v-model="password" 
+                :type="showPassword ? 'text' : 'password'" 
+                required 
+                placeholder="Enter your password"
+                class="w-full px-5 py-3 pr-12 bg-gray-50 dark:bg-gray-700 border border-transparent dark:border-gray-600 rounded-xl focus:bg-white dark:focus:bg-gray-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400"
+              >
+              
+              <button 
+                type="button" 
+                @click="showPassword = !showPassword"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors focus:outline-none"
+              >
+                <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18M10.5 10.677a2.121 2.121 0 002.823 2.823M7.362 7.362A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7-.302.966-.802 1.882-1.49 2.71m-2.35 2.35A9.956 9.956 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.953 9.953 0 011.49-2.71" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -60,6 +76,7 @@ const emit = defineEmits(['login-success']);
 const username = ref('');
 const password = ref('');
 const error = ref('');
+const showPassword = ref(false);
 
 const handleLogin = async () => {
   try {
