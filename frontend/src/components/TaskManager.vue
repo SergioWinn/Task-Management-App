@@ -189,7 +189,7 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
-// --- SEARCH & FILTER LOGIC ---
+// Search & Filter
 const searchQuery = ref('');
 const filterStatus = ref('');
 
@@ -206,7 +206,6 @@ const clearFilters = () => {
   filterStatus.value = '';
 };
 
-// --- STYLE HELPERS ---
 const getStatusColor = (status) => {
   switch (status) {
     case 'Done': return 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800'; 
@@ -215,9 +214,8 @@ const getStatusColor = (status) => {
   }
 };
 
-// --- CORE DATA & API ---
+// CRUD
 const tasks = ref([]);
-// Updated: Default form value includes start_date and end_date
 const newTask = ref({ title: '', description: '', status: 'To Do', start_date: '', end_date: '' });
 const editingId = ref(null);
 const editForm = ref({});
